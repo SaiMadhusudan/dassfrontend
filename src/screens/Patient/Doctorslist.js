@@ -4,26 +4,14 @@ import Logo from '../../components/Logo'
 import Header from '../../components/Header'
 import Paragraph from '../../components/Paragraph'
 import Button from '../../components/Button'
+import DoctorCard from './DoctorCard'
 
 export default function Doctorlist({ navigation }) {
   return (
-    <Background>
-      <Logo />
+    <>
       <Header>Hello user</Header>
-      <Paragraph>
-        Doctor list is here
-      </Paragraph>
-      <Button
-        mode="outlined"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'StartScreen' }],
-          })
-        }
-      >
-        Logout
-      </Button>
-    </Background>
+      <DoctorCard />
+    </>
+
   )
 }
