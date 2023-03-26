@@ -1,7 +1,4 @@
 import axios from 'axios';
-import react from 'react';
-import { useState,useCallback,useEffect } from 'react';
-
 
 export async function emailValidator(email) {
   const returnValue = await axios.post('http://localhost:3001/api/login/validemail', { email: email });

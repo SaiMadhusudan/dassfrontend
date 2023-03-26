@@ -4,11 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import PAppointments from '../screens/Patient/PAppointments';
 import Dashboard_patient from '../screens/Patient/Dashboard_patient';
 import Doctorslist from '../screens/Patient/Doctorslist';
+import { useContext } from 'react'
+import { UserContext } from '../contexts/UserContext'
 
 const Tab = createBottomTabNavigator();
 
 function PatientNavigator() {
     const navigation = useNavigation();
+    const [user, setUser] = useContext(UserContext);
     return (
         <Tab.Navigator
             screenOptions={{

@@ -10,18 +10,22 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
+import { useContext } from 'react'
+import { UserContext } from '../contexts/UserContext'
+import axios from 'axios'
+
 
 export default function LoginScreen({ navigation }) {
+  const [user, setUser] = useContext(UserContext);
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
   const onLoginPressed = async () => {
     const emailError = await emailValidator(email.value)
-    console.log(emailError);
     const credentials = { email: email.value, password: password.value }
-    const passwordError =  await passwordValidator(credentials)
+    const passwordError = await passwordValidator(credentials)
     if (
-      (passwordError != 'a' &&  passwordError != 'd') &&
+      (passwordError != 'a' && passwordError != 'd') &&
       (emailError || passwordError)
     ) {
       setEmail({ ...email, error: emailError })
@@ -29,19 +33,22 @@ export default function LoginScreen({ navigation }) {
       return
     }
     if (passwordError == 'a') {
+      const returnValue = await axios.post('http://localhost:3001/api/login/validpassword', { email: email.value, PasswordHash: password.value });
+      setUser(returnValue.data);
       navigation.reset({
         index: 0,
         routes: [{ name: 'PatientNavigator' }],
       })
     }
     if (passwordError == 'd') {
+      const returnValue = await axios.post('http://localhost:3001/api/login/validpassword', { email: email.value, PasswordHash: password.value });
+      setUser(returnValue.data);
       navigation.reset({
         index: 0,
         routes: [{ name: 'DoctorNavigator' }],
       })
     }
   }
-
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
