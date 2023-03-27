@@ -7,6 +7,7 @@ import axios from 'axios'
 
 export default function Doctorlist({ navigation }) {
   const [user, setUser] = useContext(UserContext);
+  const [refresh, setRefresh] = useState(0);
   const [Patient, setPatient] = useState(null);
   const [Doctorslist, setDoctorslist] = useState([]);
   const [RequestDoctor, setRequestDoctor] = useState(null);
@@ -19,7 +20,7 @@ export default function Doctorlist({ navigation }) {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, [refresh])
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/doctors/others/${user.Id}`)
@@ -29,7 +30,7 @@ export default function Doctorlist({ navigation }) {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, [refresh])
 
 
 
@@ -50,7 +51,9 @@ export default function Doctorlist({ navigation }) {
                   id={doctor.id}
                   key={doctor.id}
                   BasicDetails={doctor.BasicDetails}
+                  patiendId={user.Id}
                   type="1"
+                  setRefresh={setRefresh}
                 />
               )
             }
@@ -65,7 +68,10 @@ export default function Doctorlist({ navigation }) {
                   id={doctor.id}
                   key={doctor.id}
                   BasicDetails={doctor.BasicDetails}
+                  patiendId={user.Id}
                   type="2"
+                  setRefresh={setRefresh}
+                  refresh={refresh}
                 />
               )
             }
@@ -81,7 +87,9 @@ export default function Doctorlist({ navigation }) {
                   id={doctor.id}
                   key={doctor.id}
                   BasicDetails={doctor.BasicDetails}
+                  patiendId={user.Id}
                   type="0"
+                  setRefresh={setRefresh}
                 />
               )
             }

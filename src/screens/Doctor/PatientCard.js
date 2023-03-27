@@ -1,21 +1,35 @@
-import React from 'react';
+import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
 import { useNavigation } from '@react-navigation/native';
 
-const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh,refresh }) => {
-    const [doctorType, setDoctorType] = React.useState(type);
-    const handleRequest = () => {
-        axios.post('http://localhost:3001/api/doctors/request', {
-            PatientId: patiendId,
-            DoctorId: id,
+const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refresh }) => {
+    const [patientType, setPatientType] = React.useState(type);
+
+
+    const handleAccept = () => {
+        axios.post('http://localhost:3001/api/doctors/accept', {
+            PatientId: id,
+            DoctorId: doctorId,
         })
             .then(res => {
-
-                setRefresh(refresh+1);       
+                setRefresh(refresh + 1);
             })
     };
+
+    const handleReject = () => {
+        axios.post('http://localhost:3001/api/doctors/reject', {
+            PatientId: id,
+            DoctorId: doctorId,
+        })
+            .then(res => {
+                setRefresh(refresh + 1);
+            })
+    };
+
+
+
 
 
     return (
@@ -27,33 +41,27 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh,refres
 
             <View style={styles.cardActions}>
                 {
-                    (type === "2") ?
-                        <Text style={styles.buttonText}>OnRequest</Text>
+                    (type === "0") ?
+                        <>
+                            <TouchableOpacity style={styles.button} onPress={handleAccept}>
+                                <Text style={styles.buttonText}>Accept</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={handleReject}>
+                                <Text style={styles.buttonText}>Reject</Text>
+                            </TouchableOpacity>
+                        </>
                         :
                         <>
-                            {
-                                (type === "0") ?
-                                    <TouchableOpacity style={styles.button} onPress={handleRequest}>
-                                        <Text style={styles.buttonText}>Request</Text>
-                                    </TouchableOpacity>
-                                    :
-                                    <>
-                                        <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
-                                            <Text style={styles.buttonText}>Chat</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button} onPress={() => console.log("Book Appointment pressed")}>
-                                            <Text style={styles.buttonText}>Book</Text>
-                                        </TouchableOpacity>
-                                    </>
-
-                            }
+                            <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
+                                <Text style={styles.buttonText}>Chat</Text>
+                            </TouchableOpacity>
                         </>
                 }
-
             </View>
         </View>
-    );
-};
+    )
+}
+
 
 const styles = StyleSheet.create({
     card: {
@@ -103,4 +111,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DoctorCard;
+export default PatientCard;
