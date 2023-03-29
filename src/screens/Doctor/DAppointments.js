@@ -4,15 +4,85 @@ import Logo from '../../components/Logo'
 import Header from '../../components/Header'
 import Paragraph from '../../components/Paragraph'
 import Button from '../../components/Button'
+import axios from 'axios'
+import AppointmentCard from './DoctorAppointment'
+import { useContext, useState, useEffect } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+
+
 
 export default function DAppointments({ navigation }) {
+  const [user, setUser] = useContext(UserContext);
+  const [Appointments, setAppointments] = useState(null);
+  const [TodayAppointments, setTodayAppointments] = useState(null);
+  const [refresh, setRefresh] = useState(0);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/appointments/doctor/${user.Id}`)
+      .then(res => {
+        setAppointments(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [refresh])
+
+  // copute todays appointments
+  useEffect(() => {
+    if (Appointments) {
+      let today = new Date();
+      let todayAppointments = Appointments.filter((appointment) => {
+        let appointmentDate = new Date(appointment.Date);
+        return (appointmentDate.getDate() === today.getDate() && appointmentDate.getMonth() === today.getMonth() && appointmentDate.getFullYear() === today.getFullYear())
+      })
+      setTodayAppointments(todayAppointments);
+    }
+  }, [Appointments])
+
+
+
   return (
-    <Background>
-      <Logo />
-      <Header>Hello Doctor!</Header>
-      <Paragraph>
-     Your appointments are here
-      </Paragraph>
+    <>
+      <Header>Your Appointments For Today</Header>
+      {
+        (TodayAppointments)
+          ?
+          <>
+            {
+              TodayAppointments.map((appointment) => {
+                return (
+                  <AppointmentCard
+                    Appointment={appointment}
+                    key={appointment.id}
+                    setRefresh={setRefresh}
+                  />
+                )
+              })
+            }
+          </>
+          :
+          <Paragraph>No Appointments Today</Paragraph>
+      }
+      <Header>All Appointments</Header>
+      {
+        (TodayAppointments)
+          ?
+          <>
+            {
+              TodayAppointments.map((appointment) => {
+                return (
+                  <AppointmentCard
+                    Appointment={appointment}
+                    key={appointment.id}
+                    setRefresh={setRefresh}
+                  />
+                )
+              })
+            }
+          </>
+          :
+          <Paragraph>No Appointments Today</Paragraph>
+      }
       <Button
         mode="outlined"
         onPress={() =>
@@ -24,6 +94,6 @@ export default function DAppointments({ navigation }) {
       >
         Logout
       </Button>
-    </Background>
+    </>
   )
 }

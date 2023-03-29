@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-
+import MyComponent from './ChatDoctor';
 import { useNavigation } from '@react-navigation/native';
 
 const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refresh }) => {
@@ -40,6 +40,7 @@ const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refre
             </View>
 
             <View style={styles.cardActions}>
+                <MyComponent />
                 {
                     (type === "0") ?
                         <>

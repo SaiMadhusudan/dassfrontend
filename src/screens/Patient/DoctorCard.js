@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+
 import axios from 'axios';
 
 import { useNavigation } from '@react-navigation/native';
 
-const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh,refresh }) => {
+const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refresh }) => {
     const [doctorType, setDoctorType] = React.useState(type);
     const handleRequest = () => {
         axios.post('http://localhost:3001/api/doctors/request', {
@@ -13,7 +14,7 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh,refres
         })
             .then(res => {
 
-                setRefresh(refresh+1);       
+                setRefresh(refresh + 1);
             })
     };
 
@@ -24,7 +25,6 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh,refres
                 <Text style={styles.name}>{Name}</Text>
                 <Text style={styles.basicDetails}>{BasicDetails}</Text>
             </View>
-
             <View style={styles.cardActions}>
                 {
                     (type === "2") ?
