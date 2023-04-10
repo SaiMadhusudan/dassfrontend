@@ -27,6 +27,7 @@ export default function DAppointments({ navigation }) {
       })
   }, [refresh])
 
+
   // copute todays appointments
   useEffect(() => {
     if (Appointments) {
@@ -65,11 +66,11 @@ export default function DAppointments({ navigation }) {
       }
       <Header>All Appointments</Header>
       {
-        (TodayAppointments)
+        (Appointments)
           ?
           <>
             {
-              TodayAppointments.map((appointment) => {
+              Appointments.map((appointment) => {
                 return (
                   <AppointmentCard
                     Appointment={appointment}

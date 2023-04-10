@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-
+import BookingDialog from './Booking';
 import axios from 'axios';
 
 import { useNavigation } from '@react-navigation/native';
 
 const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refresh }) => {
+    const navigation = useNavigation();
     const [doctorType, setDoctorType] = React.useState(type);
     const handleRequest = () => {
         axios.post('http://localhost:3001/api/doctors/request', {
@@ -41,7 +42,7 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refre
                                         <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
                                             <Text style={styles.buttonText}>Chat</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button} onPress={() => console.log("Book Appointment pressed")}>
+                                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("BookingDialog")}>
                                             <Text style={styles.buttonText}>Book</Text>
                                         </TouchableOpacity>
                                     </>
@@ -50,8 +51,8 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refre
                         </>
                 }
 
-            </View>
-        </View>
+            </View >
+        </View >
     );
 };
 

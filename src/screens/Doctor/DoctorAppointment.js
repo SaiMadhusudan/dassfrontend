@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, FlatList } from 'react-native';
 
-const AppointmentCard = ({ Appointment}) => {
+const AppointmentCard = ({ Appointment }) => {
+    console.log(Appointment);
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedStatus, setSelectedStatus] = useState(status);
+    const [selectedStatus, setSelectedStatus] = useState(Appointment.status);
     const [statusChanged, setStatusChanged] = useState(false);
 
     const handleStatusChange = (selectedItem) => {
@@ -15,6 +17,7 @@ const AppointmentCard = ({ Appointment}) => {
         setModalVisible(false);
         if (statusChanged) {
             console.log(`Status changed to: ${selectedStatus}`);
+            axios.post(`http://localhost:3001/api/appointments/${selectedStatus}`, { id: Appointment.id })
             setStatusChanged(false);
         }
     };
@@ -26,9 +29,11 @@ const AppointmentCard = ({ Appointment}) => {
         { key: 'Cancelled', value: 'Cancelled' },
     ];
 
-    const doctorName = 'Dr. ' + Appointment.Doctor.Name;
-    const patientName = Appointment.Patient.Name;
+    const doctorName = 'Dr. ' + Appointment.doctor.Name;
+    const patientName = Appointment.patient.Name;
     const Date = Appointment.Time;
+    const time = Appointment.Time;
+    const date = Appointment.Time;
 
 
 
