@@ -2,9 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Chip } from 'react-native-paper';
 
-const CurrentDate = () => {
-  const today = new Date();
-  const date = today.toLocaleDateString();
+const CurrentDate = ({date}) => {
 
   return (
     <View style={styles.container}>

@@ -42,7 +42,10 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refre
                                         <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
                                             <Text style={styles.buttonText}>Chat</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("BookingDialog")}>
+                                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("BookingDialog",{
+                                            PatientId: patiendId,
+                                            DoctorId:id
+                                        })}>
                                             <Text style={styles.buttonText}>Book</Text>
                                         </TouchableOpacity>
                                     </>
