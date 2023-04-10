@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import BookingDialog from './Booking';
+import BookingDialog from './Booking/Booking';
 import axios from 'axios';
 
 import { useNavigation } from '@react-navigation/native';
