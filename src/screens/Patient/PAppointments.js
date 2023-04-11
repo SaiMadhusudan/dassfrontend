@@ -1,18 +1,52 @@
 import React from 'react'
-import Background from '../../components/Background'
-import Logo from '../../components/Logo'
 import Header from '../../components/Header'
 import Paragraph from '../../components/Paragraph'
 import Button from '../../components/Button'
+import axios from 'axios'
+import AppointmentCard from './PatientAppointment'
+import { useContext, useState, useEffect } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+import { Text } from 'react-native-paper'
 
-export default function PAppointments({ navigation }) {
+export default function PAappointments({ navigation }) {
+    const [user, setUser] = useContext(UserContext);
+    const [Appointments, setAppointments] = useState(null);
+    const [refresh, setRefresh] = useState(0);
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/appointments/patient/${user.Id}`)
+            .then(res => {
+                setAppointments(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [refresh])
+
+
     return (
-        <Background>
-            <Logo />
-            <Header>Hello user</Header>
-            <Paragraph>
-                Patient appointments are here
-            </Paragraph>
+        <>
+            <Header>Your Appointments</Header>
+            {
+                (Appointments)
+                    ?
+                    <>
+                        {
+                            Appointments.map((appointment) => {
+                                return (
+                                    <AppointmentCard
+                                        Appointment={appointment}
+                                        key={appointment.id}
+                                        setRefresh={setRefresh}
+                                    />
+                                )
+                            })
+                        }
+                    </>
+                    :
+                    <Text>No Appointments</Text>
+            }
+
             <Button
                 mode="outlined"
                 onPress={() =>
@@ -24,6 +58,6 @@ export default function PAppointments({ navigation }) {
             >
                 Logout
             </Button>
-        </Background>
+        </>
     )
 }

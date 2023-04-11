@@ -23,16 +23,13 @@ const AppointmentCard = ({ Appointment }) => {
 
     const statusOptions = [
         { key: 'Pending', value: 'Pending' },
-        { key: 'Completed', value: 'Completed' },
-        { key: 'Rejected', value: 'Rejected' },
-        { key: 'Cancelled', value: 'Cancelled' },
+        { key: 'Cancelled', value: 'Cancelled' }
     ];
 
     const doctorName = 'Dr. ' + Appointment.doctor.Name;
     const patientName = Appointment.patient.Name;
-    const Date = Appointment.Time;
     const time = Appointment.Time;
-    const date = Appointment.Time;
+    const date = Appointment.Date;
 
 
 

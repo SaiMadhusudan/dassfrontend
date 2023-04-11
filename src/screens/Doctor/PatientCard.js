@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import MyComponent from './ChatDoctor';
 import { useNavigation } from '@react-navigation/native';
 
 const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refresh }) => {
     const [patientType, setPatientType] = React.useState(type);
 
+    const navigation = useNavigation();
 
     const handleAccept = () => {
         axios.post('http://localhost:3001/api/doctors/accept', {
@@ -40,7 +40,7 @@ const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refre
             </View>
 
             <View style={styles.cardActions}>
-                <MyComponent />
+
                 {
                     (type === "0") ?
                         <>
@@ -53,7 +53,11 @@ const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refre
                         </>
                         :
                         <>
-                            <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
+                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("DoctorChatScreen", {
+                                patientId: id,
+                                doctorId: doctorId,
+                                currentUserId: doctorId
+                            })}>
                                 <Text style={styles.buttonText}>Chat</Text>
                             </TouchableOpacity>
                         </>

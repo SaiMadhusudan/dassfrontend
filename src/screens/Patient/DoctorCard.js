@@ -3,9 +3,10 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import BookingDialog from './Booking/Booking';
 import axios from 'axios';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation} from '@react-navigation/native';
 
 const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refresh }) => {
+
     const navigation = useNavigation();
     const [doctorType, setDoctorType] = React.useState(type);
     const handleRequest = () => {
@@ -39,7 +40,13 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refre
                                     </TouchableOpacity>
                                     :
                                     <>
-                                        <TouchableOpacity style={styles.button} onPress={() => console.log("Chat pressed")}>
+                                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("PatientChatScreen",{
+                                            patientId: patiendId,
+                                            doctorId:id,
+                                            currentUserId:patiendId
+                            
+                                        })}
+                                        >
                                             <Text style={styles.buttonText}>Chat</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("BookingDialog",{

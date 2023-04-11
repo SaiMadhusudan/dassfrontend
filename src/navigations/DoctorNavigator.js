@@ -4,11 +4,31 @@ import { useNavigation } from '@react-navigation/native';
 import DAppointments from '../screens/Doctor/DAppointments';
 import Dashboard_doctor from '../screens/Doctor/Dashboard_doctor';
 import Patientslist from '../screens/Doctor/Patientslist';
-
+import { UserContext } from '../contexts/UserContext';
+import { useContext } from 'react'
+import ChatScreen from '../screens/chat';
+import { createStackNavigator } from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function DoctorNavigator() {
     const navigation = useNavigation();
+    const [user, setUser] = useContext(UserContext);
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="DoctorTabBar" component={TabBar} />
+            <Stack.Screen name="DoctorChatScreen" component={ChatScreen} />
+        </Stack.Navigator>
+    );
+}
+
+function TabBar() {
+    const navigation = useNavigation();
+    const [user, setUser] = useContext(UserContext);
     return (
         <Tab.Navigator
             screenOptions={{

@@ -4,13 +4,15 @@ import DoctorCard from './DoctorCard'
 import { useContext, useState, useEffect } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import axios from 'axios'
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-export default function Doctorlist({ navigation }) {
+export default function Doctorlist() {
   const [user, setUser] = useContext(UserContext);
   const [refresh, setRefresh] = useState(0);
   const [Patient, setPatient] = useState(null);
   const [Doctorslist, setDoctorslist] = useState([]);
   const [RequestDoctor, setRequestDoctor] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/patients/${user.Id}`)
@@ -58,7 +60,7 @@ export default function Doctorlist({ navigation }) {
               )
             }
             )
-            
+
           }
           <Header>Doctors you have requested</Header>
           {

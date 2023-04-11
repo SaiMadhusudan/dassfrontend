@@ -20,22 +20,7 @@ export default function DatePicker({ date, setDate }) {
         },
         [setOpen, setDate]
     );
-
-    const [visible, setVisible] = React.useState(false)
-    const onDismiss = React.useCallback(() => {
-        setVisible(false)
-    }, [setVisible])
-
-    const onConfirm = React.useCallback(
-        ({ hours, minutes }) => {
-            ;
-            setHours(hours);
-            setMinutes(minutes);
-            setVisible(false);
-            console.log({ hours, minutes });
-        },
-        [setVisible]
-    );
+    
 
     return (
         <SafeAreaProvider>
