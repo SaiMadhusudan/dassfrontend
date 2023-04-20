@@ -7,11 +7,7 @@ const socket = io.connect("http://localhost:3001");
 import { Button } from 'react-native-paper';
 
 const ChatScreen = ({ route }) => {
-
-
     const { patientId, doctorId, currentUserId } = route.params;
-
-    //id 2 should be on the other side
     const navigation = useNavigation();
 
     const [messages, setMessages] = useState([]);
@@ -19,13 +15,13 @@ const ChatScreen = ({ route }) => {
     const [chatId, setChatId] = useState("");
     const chatroom = doctorId + "_" + patientId;
 
-    //need to check they have a chat or we need to create it
-
     const onSend = (newMessages = []) => {
+        console.log(newMessages);
         socket.emit("s_message", { messages, room: chatroom });
         setMessages((previousMessages) =>
             GiftedChat.append(previousMessages, newMessages)
         );
+        
         axios.post("http://localhost:3001/api/chats/addmessage", {
             chatId: chatId,
             message: newMessages[0].text,
@@ -57,7 +53,7 @@ const ChatScreen = ({ route }) => {
             setMessages(data2.data.messages);
             setdatastatus(true);
         });
-    }, [socket]
+    }, [socket, messages, datastatus]
     );
 
     return (
