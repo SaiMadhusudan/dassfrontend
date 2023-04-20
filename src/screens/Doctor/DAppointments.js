@@ -6,7 +6,7 @@ import axios from 'axios'
 import AppointmentCard from './DoctorAppointment'
 import { useContext, useState, useEffect } from 'react'
 import { UserContext } from '../../contexts/UserContext'
-
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 
 export default function DAppointments({ navigation }) {
@@ -16,7 +16,7 @@ export default function DAppointments({ navigation }) {
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/appointments/doctor/${user.Id}`)
+    axios.get(`https://parijatham-backend.onrender.com/api/appointments/doctor/${user.Id}`)
       .then(res => {
         setAppointments(res.data);
       })

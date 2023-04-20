@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, FlatList } from 'react-native';
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 const AppointmentCard = ({ Appointment }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -16,7 +17,7 @@ const AppointmentCard = ({ Appointment }) => {
         setModalVisible(false);
         if (statusChanged) {
             console.log(`Status changed to: ${selectedStatus}`);
-            axios.post(`http://localhost:3001/api/appointments/${selectedStatus}`, { id: Appointment.id })
+            axios.post(`https://parijatham-backend.onrender.com/api/appointments/${selectedStatus}`, { id: Appointment.id })
             setStatusChanged(false);
         }
     };
@@ -31,7 +32,11 @@ const AppointmentCard = ({ Appointment }) => {
     const time = Appointment.Time;
     const date = Appointment.Date;
 
+    const date_array = date.split(" ");
+    const date_final = date_array[0] + "th " + date_array[2];
 
+    const time_array = time.split(" ");
+    const time_final = time_array[0] + ":" + time_array[2];
 
     return (
         <View style={styles.container}>
@@ -43,8 +48,8 @@ const AppointmentCard = ({ Appointment }) => {
             </View>
             <View style={styles.body}>
                 <Text style={styles.patientName}>{patientName}</Text>
-                <Text style={styles.date}>{date}</Text>
-                <Text style={styles.time}>{time}</Text>
+                <Text style={styles.date}>{date_final}</Text>
+                <Text style={styles.time}>{time_final}</Text>
             </View>
             <Modal visible={modalVisible} animationType="slide" transparent>
                 <View style={styles.modalContainer}>

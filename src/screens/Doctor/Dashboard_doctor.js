@@ -6,6 +6,7 @@ import Paragraph from '../../components/Paragraph'
 import Button from '../../components/Button'
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import axios from 'axios'
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 export default function Dashboard_doctor({ navigation }) {
 
@@ -29,7 +30,7 @@ export default function Dashboard_doctor({ navigation }) {
 
 
   async function fetchStatus() {
-    const response = await axios.get(`http://localhost:3001/api/hospitals/P/${date}`);
+    const response = await axios.get(`https://parijatham-backend.onrender.com/api/hospitals/P/${date}`);
     console.log(response.data.status);
     setStatus(response.data.status);
   }

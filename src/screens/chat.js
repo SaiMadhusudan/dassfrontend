@@ -3,7 +3,8 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
+const localUrl = "https://parijatham-backend.onrender.com";
+const socket = io.connect(`https://parijatham-backend.onrender.com`);
 import { Button } from 'react-native-paper';
 
 const ChatScreen = ({ route }) => {
@@ -22,7 +23,7 @@ const ChatScreen = ({ route }) => {
             GiftedChat.append(previousMessages, newMessages)
         );
         
-        axios.post("http://localhost:3001/api/chats/addmessage", {
+        axios.post(`https://parijatham-backend.onrender.com/api/chats/addmessage`, {
             chatId: chatId,
             message: newMessages[0].text,
             whosent: currentUserId
@@ -30,7 +31,7 @@ const ChatScreen = ({ route }) => {
     };
 
     async function fetchData() {
-        const data = await axios.get("http://localhost:3001/api/chats/" + doctorId + "_" + patientId);
+        const data = await axios.get(`https://parijatham-backend.onrender.com/api/chats/` + doctorId + "_" + patientId);
         console.log(data.data);
         setChatId(data.data._id);
         setMessages(data.data.messages);
@@ -49,7 +50,7 @@ const ChatScreen = ({ route }) => {
 
     useEffect(() => {
         socket.on("r_message", async (data) => {
-            const data2 = await axios.get("http://localhost:3001/api/chats/" + doctorId + "_" + patientId);
+            const data2 = await axios.get(`https://parijatham-backend.onrender.com/api/chats/` + doctorId + "_" + patientId);
             setMessages(data2.data.messages);
             setdatastatus(true);
         });

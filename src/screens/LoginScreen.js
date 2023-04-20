@@ -13,14 +13,17 @@ import { passwordValidator } from '../helpers/passwordValidator'
 import { useContext } from 'react'
 import { UserContext } from '../contexts/UserContext'
 import axios from 'axios'
-
+import { ActivityIndicator } from 'react-native-paper';
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 export default function LoginScreen({ navigation }) {
   const [user, setUser] = useContext(UserContext);
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [isloginPressed, setLoginPressed] = useState(false);
 
   const onLoginPressed = async () => {
+    setLoginPressed(true);
     const emailError = await emailValidator(email.value)
     const credentials = { email: email.value, password: password.value }
     const passwordError = await passwordValidator(credentials)
@@ -30,10 +33,11 @@ export default function LoginScreen({ navigation }) {
     ) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
+      setLoginPressed(false)
       return
     }
     if (passwordError == 'a') {
-      const returnValue = await axios.post('http://localhost:3001/api/login/validpassword', { email: email.value, PasswordHash: password.value });
+      const returnValue = await axios.post(`https://parijatham-backend.onrender.com/api/login/validpassword`, { email: email.value, PasswordHash: password.value });
       setUser(returnValue.data);
       navigation.reset({
         index: 0,
@@ -41,14 +45,16 @@ export default function LoginScreen({ navigation }) {
       })
     }
     if (passwordError == 'd') {
-      const returnValue = await axios.post('http://localhost:3001/api/login/validpassword', { email: email.value, PasswordHash: password.value });
+      const returnValue = await axios.post(`https://parijatham-backend.onrender.com/api/login/validpassword`, { email: email.value, PasswordHash: password.value });
       setUser(returnValue.data);
       navigation.reset({
         index: 0,
         routes: [{ name: 'DoctorNavigator' }],
       })
     }
+  
   }
+  
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
@@ -81,10 +87,17 @@ export default function LoginScreen({ navigation }) {
         >
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
-      </View>
-      <Button mode="contained" onPress={onLoginPressed}>
-        Login
-      </Button>
+        <View>
+          {
+            (isloginPressed) ?
+              <ActivityIndicator></ActivityIndicator>
+              :
+
+              <Button mode="contained" onPress={onLoginPressed}>
+                Login
+              </Button>
+          }
+        </View></View>
       {/* <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>

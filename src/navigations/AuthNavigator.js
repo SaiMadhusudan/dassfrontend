@@ -4,10 +4,8 @@ import {
     StartScreen,
     LoginScreen
 } from '../screens';
-import Background from "../components/Background";
 import {
-    SafeAreaProvider,
-    useSafeAreaInsets,
+    SafeAreaProvider
 } from 'react-native-safe-area-context';
 import DoctorNavigator from "./DoctorNavigator";
 import PatientNavigator from "./PatientNavigator";

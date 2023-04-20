@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import BookingDialog from './Booking/Booking';
 import axios from 'axios';
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 import { useNavigation} from '@react-navigation/native';
 
@@ -10,7 +11,7 @@ const DoctorCard = ({ id, Name, BasicDetails, type, patiendId, setRefresh, refre
     const navigation = useNavigation();
     const [doctorType, setDoctorType] = React.useState(type);
     const handleRequest = () => {
-        axios.post('http://localhost:3001/api/doctors/request', {
+        axios.post(`https://parijatham-backend.onrender.com/api/doctors/request`, {
             PatientId: patiendId,
             DoctorId: id,
         })

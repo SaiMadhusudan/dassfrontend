@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import axios from 'axios'
 import PatientCard from './PatientCard'
-
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 export default function Patientslist({ navigation }) {
   const [user, setUser] = useContext(UserContext);
@@ -12,7 +12,7 @@ export default function Patientslist({ navigation }) {
   const [Patientslist, setPatientslist] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/doctors/${user.Id}`)
+    axios.get(`https://parijatham-backend.onrender.com/api/doctors/${user.Id}`)
       .then(res => {
         setDoctor(res.data);
       })

@@ -6,6 +6,8 @@ import { UserContext } from '../../contexts/UserContext'
 import axios from 'axios'
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
+const localUrl = "https://parijatham-backend.onrender.com ";
+
 export default function Doctorlist() {
   const [user, setUser] = useContext(UserContext);
   const [refresh, setRefresh] = useState(0);
@@ -15,7 +17,7 @@ export default function Doctorlist() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/patients/${user.Id}`)
+    axios.get(`https://parijatham-backend.onrender.com/api/patients/${user.Id}`)
       .then(res => {
         setPatient(res.data);
       })
@@ -25,7 +27,7 @@ export default function Doctorlist() {
   }, [refresh])
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/doctors/others/${user.Id}`)
+    axios.get(`https://parijatham-backend.onrender.com/api/doctors/others/${user.Id}`)
       .then(res => {
         setDoctorslist(res.data);
       })

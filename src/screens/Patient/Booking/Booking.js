@@ -5,6 +5,7 @@ import { DatePickerModal } from 'react-native-paper-dates';
 import { TimePickerModal } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import axios from "axios";
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -53,14 +54,14 @@ function Booking({ route }) {
   }
 
   function ScheduleAppointment() {
-    axios.post("http://localhost:3001/api/appointments/", {
+    axios.post(`https://parijatham-backend.onrender.com/api/appointments/`, {
       doctor: DoctorId,
       patient: PatientId,
       Date:  `${displayDate.date1} and ${displayDate.month1}`,
       Time: `${hours} and ${minutes}`
     }).then((response) => {
       console.log(response.data);
-      navigation.navigate("PAppointments");
+      navigation.navigate("Appointments");
     }
     ).catch((error) => {
       console.log(error);
@@ -72,7 +73,7 @@ function Booking({ route }) {
   }
 
   function navigateBack() {
-     navigation.navigate("Doctorslist");
+     navigation.navigate("Doctors");
     // console.log("back");
   }
 

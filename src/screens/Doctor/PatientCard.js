@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+const localUrl = "https://parijatham-backend.onrender.com ";
 
 const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refresh }) => {
     const [patientType, setPatientType] = React.useState(type);
@@ -9,7 +10,7 @@ const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refre
     const navigation = useNavigation();
 
     const handleAccept = () => {
-        axios.post('http://localhost:3001/api/doctors/accept', {
+        axios.post(`https://parijatham-backend.onrender.com/api/doctors/accept`, {
             PatientId: id,
             DoctorId: doctorId,
         })
@@ -19,7 +20,7 @@ const PatientCard = ({ id, Name, BasicDetails, type, doctorId, setRefresh, refre
     };
 
     const handleReject = () => {
-        axios.post('http://localhost:3001/api/doctors/reject', {
+        axios.post(`https://parijatham-backend.onrender.com/api/doctors/reject`, {
             PatientId: id,
             DoctorId: doctorId,
         })
